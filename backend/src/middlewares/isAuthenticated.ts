@@ -23,6 +23,9 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
             process.env.JWT_SECRET
         ) as Payload;
 
+        // retrieve the token ID and put inside a user_id variable inside req
+        req.user_id = sub;
+
         return next();
 
     } catch (err) {
