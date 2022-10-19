@@ -11,17 +11,37 @@ interface ProductRequest {
 class CreateProductService {
     async execute({ name, price, description, banner, category_id }: ProductRequest) {
 
-        const product = await prismaClient.product.create({
-            data: {
-                name,
-                price,
-                description,
-                banner,
-                category_id
+        // check if name already registered on the platform
+        const nameAlreadyRegistered = await prismaClient.product.findFirst({
+            where: {
+                name: name
             }
         });
 
-        return { product };
+        if (nameAlreadyRegistered) {
+            throw new Error('Pizza already registered!');
+        } else {
+            const product = await prismaClient.product.create({
+                data: {
+                    name,
+                    price,
+                    description,
+                    banner,
+                    category_id
+                },
+                select: {
+                    name: true,
+                    price: true,
+                    description: true,
+                    banner: true,
+                    category_id: true
+                }
+            });
+
+            return product;
+
+        }
+
     }
 };
 

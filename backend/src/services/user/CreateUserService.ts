@@ -20,7 +20,7 @@ class CreateUserService {
             where: {
                 email: email
             }
-        })
+        });
 
         if (userAlreadyExists) {
             throw new Error('User already exists')
