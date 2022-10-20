@@ -18,6 +18,7 @@ class CreateOrderService {
                 table: true,
                 name: true,
                 status: true,
+                draft: true,
             }
         });
 
