@@ -96,4 +96,4 @@ export const getServerSideProps = canSSRGuest(async (context) => {
   return {
     props: {}
   }
-})
+});
