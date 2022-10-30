@@ -87,8 +87,8 @@ export default function Product({ category_list }: CategoryProps) {
 
         setName('');
         setPrice('');
+        setAvatarUrl('');
         setDescription('');
-        setImageAvatar(null);
 
     }
 
