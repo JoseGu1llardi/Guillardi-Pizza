@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import styles from './styles.module.scss';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/future/image';
 
 import { FiLogOut } from 'react-icons/fi';
 
@@ -17,7 +17,12 @@ export function Header() {
             <div className={styles.headerContent}>
 
                 <Link href='/dashboard'>
-                    <Image src="/logo.svg" width={190} height={60} alt="logo" />
+                    <Image 
+                    src="/logo.svg" 
+                    width={190} 
+                    height={60} 
+                    alt="logo" 
+                    />
                 </Link>
 
                 <nav className={styles.navMenu}>
