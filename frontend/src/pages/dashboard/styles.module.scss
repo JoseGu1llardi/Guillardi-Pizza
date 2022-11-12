@@ -23,6 +23,14 @@
     }
 }
 
+.btnRefreshOrder {
+    animation: spin 2s linear;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .listOrders {
     display: flex;
     flex-direction: column;
@@ -54,4 +62,14 @@
     height: 60px;
     border-radius: .3rem 0 0 .3rem;
     margin-right: 1rem;
+}
+
+.emptyList {
+    margin-top: 5rem;
+    font-size: 2rem;
+    color: var(--gray-100);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
