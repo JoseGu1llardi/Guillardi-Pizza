@@ -1,13 +1,33 @@
+import { useState, useContext } from 'react';
+
 import {
     View,
     Text,
-    StyleSheet,
     Image,
     TextInput,
     TouchableOpacity
 } from 'react-native';
 
+import { AuthContext } from '../../contexts/AuthContext';
+
+import { styles } from './styles';
+
 export default function SignIn() {
+    const { signIn } = useContext(AuthContext);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    async function handleSingIn() {
+
+        if (!email || !password) {
+            return;
+        }
+
+        await signIn({ email, password });
+
+    }
+
     return (
         <View style={styles.container}>
             <Image
@@ -20,6 +40,8 @@ export default function SignIn() {
                     placeholder="Enter your e-mail"
                     style={styles.input}
                     placeholderTextColor="#FFF"
+                    value={email}
+                    onChangeText={setEmail}
                 />
 
                 <TextInput
@@ -27,55 +49,14 @@ export default function SignIn() {
                     style={styles.input}
                     placeholderTextColor="#FFF"
                     secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
                 />
 
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={handleSingIn}>
                     <Text style={styles.btnText}>Sign in</Text>
                 </TouchableOpacity>
             </View>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#1D1D2E'
-    },
-    logo: {
-        marginBottom: 18
-    },
-    inputContainer: {
-        width: '95%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 34,
-        paddingHorizontal: 14,
-    },
-    input: {
-        width: '95%',
-        height: 40,
-        backgroundColor: '#101026',
-        marginBottom: 12,
-        borderRadius: 4,
-        paddingHorizontal: 8,
-        color: '#FFF',
-        borderWidth: 1,
-        borderColor: '#a3a0a0'
-    },
-    btn: {
-        width: '95%',
-        height: 40,
-        backgroundColor: '#3FFFa3',
-        borderRadius: 4,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    btnText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#101026',
-    },
-});
