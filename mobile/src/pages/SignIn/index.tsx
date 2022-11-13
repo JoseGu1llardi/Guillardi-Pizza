@@ -43,6 +43,7 @@ export default function SignIn() {
                     placeholderTextColor="#FFF"
                     value={email}
                     onChangeText={setEmail}
+                    keyboardType='email-address'
                 />
 
                 <TextInput
