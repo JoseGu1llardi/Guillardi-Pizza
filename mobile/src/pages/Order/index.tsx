@@ -77,6 +77,10 @@ export default function Order() {
         }
     }
 
+    function handleChangeCategory(item: CategoryProps) {
+        setCategorySelected(item);
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -130,12 +134,12 @@ export default function Order() {
             <Modal
                 transparent
                 visible={modalCategoryVisible}
-                animationType='fade'
+                animationType='slide'
             >
                 <ModalPicker
                     handleCloseModal={() => setModalCategoryVisible(false)}
                     options={category}
-                    selectedItem={() => { }}
+                    selectedItem={handleChangeCategory}
                 />
 
             </Modal>
