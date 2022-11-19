@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
         height: 40,
         marginBottom: 12,
         justifyContent: 'center',
-        paddingHorizontal: 8, 
+        paddingHorizontal: 8,
         color: '#FFF',
         fontSize: 20,
     },
@@ -40,5 +40,31 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#FFF'
+    },
+    actions: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+    },
+    btnAdd: {
+        width: '20%',
+        backgroundColor: '#3FD1FF',
+        borderRadius: 4,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnText: {
+        color: '#101026',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    btn: {
+        width: '75%',
+        backgroundColor: '#3FFFA3',
+        height: 40,
+        borderRadius: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });

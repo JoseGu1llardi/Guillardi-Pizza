@@ -8,7 +8,7 @@ export type StackParamsList = {
     Order: {
         table: number | string;
         order_id: string;
-        clientName?: string;
+        name?: string;
     };
 }
 

@@ -8,13 +8,15 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { StackParamsList } from '../../routes/app.routes';
 
+import { api } from '../../services/api'
+
 import { styles } from './styles';
 
 export default function Dashboard() {
   const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
   const [table, setTable] = useState('');
-  const [clientName, setClientName] = useState('');
+  const [name, setName] = useState('');
 
   async function openOrder() {
 
@@ -23,12 +25,21 @@ export default function Dashboard() {
       return
     }
 
+    const response = await api.post('/order', {
+      table: Number(table),
+      name
+    });
+
     // Make the request, open the table and navigate to the next screen
     navigation.navigate('Order', {
       table: table,
-      order_id: 'b7763d1b-1993-44dd-86ee-ab6dd59f5db6',
-      clientName: clientName,
+      order_id: response.data.id,
+      name
     });
+
+    setTable('');
+    setName('');
+
   }
 
   return (
@@ -49,8 +60,8 @@ export default function Dashboard() {
         placeholder="Customer name"
         placeholderTextColor='#F0F0F0'
         keyboardType='default'
-        value={clientName}
-        onChangeText={setClientName}
+        value={name}
+        onChangeText={setName}
       />
 
       <TouchableOpacity style={styles.btn} onPress={openOrder}>
