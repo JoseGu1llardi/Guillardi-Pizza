@@ -51,7 +51,7 @@ export default function Order() {
 
     const [products, setProducts] = useState<ProductProps[] | []>([]);
     const [productSelected, setProductSelected] = useState<CategoryProps | undefined>();
-    const [modalProductSelected, setModalProductSelected] = useState(false);
+    const [modalProductVisible, setModalProductVisible] = useState(false);
 
     const { table, name } = route.params;
 
@@ -105,6 +105,10 @@ export default function Order() {
         setCategorySelected(item);
     }
 
+    function handleChangeProduct(item: ProductProps) {
+        setProductSelected(item);
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -131,7 +135,7 @@ export default function Order() {
                 products.length !== 0 && (
                     <TouchableOpacity
                         style={styles.input}
-                        onPress={() => setModalProductSelected(false)}
+                        onPress={() => setModalProductVisible(true)}
                     >
                         <Text style={{ color: '#FFF' }}>
                             {productSelected?.name}
@@ -175,6 +179,18 @@ export default function Order() {
                     selectedItem={handleChangeCategory}
                 />
 
+            </Modal>
+
+            <Modal
+                transparent
+                visible={modalProductVisible}
+                animationType='slide'
+            >
+                <ModalPicker
+                    handleCloseModal={() => setModalProductVisible(false)}
+                    options={products}
+                    selectedItem={handleChangeProduct}
+                />
             </Modal>
 
         </SafeAreaView>
