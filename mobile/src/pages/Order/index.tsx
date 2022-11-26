@@ -27,8 +27,12 @@ type RouteDetailParams = {
     }
 }
 
-
 export type CategoryProps = {
+    id: string;
+    name: string;
+}
+
+type ProductProps = {
     id: string;
     name: string;
 }
@@ -40,16 +44,19 @@ export default function Order() {
     const navigation = useNavigation();
 
     const [category, setCategory] = useState<CategoryProps[] | []>([]);
-    const [categorySelected, setCategorySelected] = useState<CategoryProps>();
-
+    const [categorySelected, setCategorySelected] = useState<CategoryProps | undefined>();
     const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
 
     const [amount, setAmount] = useState('1');
 
+    const [products, setProducts] = useState<ProductProps[] | []>([]);
+    const [productSelected, setProductSelected] = useState<CategoryProps | undefined>();
+    const [modalProductSelected, setModalProductSelected] = useState(false);
+
     const { table, name } = route.params;
 
     useEffect(() => {
-        async function loadInfo() {
+        async function loadCategory() {
             const response = await api.get('/category');
 
             setCategory(response.data);
@@ -57,9 +64,26 @@ export default function Order() {
 
         }
 
-        loadInfo();
+        loadCategory();
 
     }, []);
+
+    useEffect(() => {
+        async function loadProducts() {
+            const response = await api.get('/category/product', {
+                params: {
+                    category_id: categorySelected?.id
+                }
+            });
+
+            setProducts(response.data);
+            setProductSelected(response.data[0]);
+
+        }
+
+        loadProducts();
+
+    }, [categorySelected]);
 
     async function handleCloseOrder() {
 
@@ -103,9 +127,18 @@ export default function Order() {
                 )
             }
 
-            <TouchableOpacity style={styles.input}>
-                <Text style={{ color: '#FFF' }}>Pepperoni pizza</Text>
-            </TouchableOpacity>
+            {
+                products.length !== 0 && (
+                    <TouchableOpacity
+                        style={styles.input}
+                        onPress={() => setModalProductSelected(false)}
+                    >
+                        <Text style={{ color: '#FFF' }}>
+                            {productSelected?.name}
+                        </Text>
+                    </TouchableOpacity>
+                )
+            }
 
             <View style={styles.qtdContainer}>
                 <Text style={styles.qtdText}>Quantity</Text>
