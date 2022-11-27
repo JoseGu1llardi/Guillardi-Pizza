@@ -21,6 +21,9 @@ import { styles } from './styles';
 import ModalPicker from '../../components/ModalPicker';
 import ListItem from '../../components/ListItem';
 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamsList } from '../../routes/app.routes';
+
 type RouteDetailParams = {
     Order: {
         table: string | number;
@@ -49,7 +52,7 @@ type OrderRouteParams = RouteProp<RouteDetailParams, 'Order'>;
 
 export default function Order() {
     const route = useRoute<OrderRouteParams>();
-    const navigation = useNavigation();
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
     const [category, setCategory] = useState<CategoryProps[] | []>([]);
     const [categorySelected, setCategorySelected] = useState<CategoryProps | undefined>();
@@ -156,6 +159,13 @@ export default function Order() {
 
     }
 
+    function handleFinishOrder() {
+        navigation.navigate('FinishOrder', {
+            table,
+            order_id: route.params.order_id
+        });
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -220,6 +230,7 @@ export default function Order() {
                 <TouchableOpacity
                     style={[styles.btn, { opacity: items.length === 0 ? 0.5 : 1 }]}
                     disabled={items.length === 0}
+                    onPress={handleFinishOrder}
                 >
                     <Text style={styles.btnText}>Advance</Text>
                 </TouchableOpacity>
