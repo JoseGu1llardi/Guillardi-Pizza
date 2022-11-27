@@ -120,7 +120,39 @@ export default function Order() {
         setProductSelected(item);
     }
 
-    function handleAddItem() {
+    // Add product on the table
+    async function handleAddItem() {
+
+        const response = await api.post('/order/add', {
+            amount: Number(amount),
+            order_id: route?.params.order_id,
+            product_id: productSelected?.id
+        })
+
+        let data = {
+            id: response.data.id,
+            product_id: productSelected?.id as string,
+            name: productSelected?.name as string,
+            amount
+        }
+
+        setItems(oldArray => [...oldArray, data]);
+
+    }
+
+    async function handleDeleteItem(item_id: string) {
+        await api.delete('/order/remove', {
+            params: {
+                item_id
+            }
+        });
+
+        // After deleting API item, we remove the item from the list
+        let removeItem = items.filter(item => {
+            return (item.id !== item_id);
+        });
+
+        setItems(removeItem);
 
     }
 
@@ -128,9 +160,13 @@ export default function Order() {
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Table {table}</Text>
-                <TouchableOpacity onPress={handleCloseOrder}>
-                    <Feather name='trash-2' size={28} color='#FF3F4B' />
-                </TouchableOpacity>
+                {
+                    items.length === 0 && (
+                        <TouchableOpacity onPress={handleCloseOrder}>
+                            <Feather name='trash-2' size={28} color='#FF3F4B' />
+                        </TouchableOpacity>
+                    )
+                }
             </View>
 
             {
@@ -194,7 +230,7 @@ export default function Order() {
                 style={{ flex: 1, marginTop: 24 }}
                 data={items}
                 keyExtractor={item => item.id}
-                renderItem={({ item }) => <ListItem data={item} />}
+                renderItem={({ item }) => <ListItem data={item} deleteItem={handleDeleteItem} />}
             />
 
             <Modal
