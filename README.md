@@ -36,7 +36,7 @@ Aplicação completa para pizzaria desenvolvida em 3 camadas, durante o curso [P
 ## :car: Iniciando a aplicação
 Baixe o repositório com git clone e entre na pasta do projeto.
 ```bash
-$ git clone https://github.com/luiizsilverio/pizzaria
+$ git clone https://github.com/guillardi-pizza
 ```
 
 ### __Back-end__
